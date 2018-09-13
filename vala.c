@@ -1,54 +1,96 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct No{
-    int numero;
-    struct No *esquerda;
-    struct No *direita;
-};
-typedef struct No No;
+struct regNo{ struct regNo *esq; int valor; struct regNo *dir;};
+typedef struct regNo TNo;
+typedef struct{TNo *raiz;}tDesc;
 
-void insercao (No **pRaiz, int numero2){
-    if (*pRaiz==NULL)
-    {
-        *Raiz=(No *)malloc(sizeof(No));
-        (*pRaiz) -> esquerda=NULL;
-        (*pRaiz) -> direita=NULL;
-        (*pRaiz) -> numero=numero2;
-    }
-    else
-    { if (numero2 <((*pRaiz)->numero))
-    {
-        insercao(&((*pRaiz)->direita),numero2);
-    }
+TNo *AchaPai( TNo *r, int n );
+void ImprimeArvore(TNo *, int);
+void IncluiNoh(tDesc *, int);
+void inicializa(tDesc *);
 
-    }
-}
-void exibirEmOrdem(No *pRaiz){
-    if(pRaiz != NULL){
-        exibirEmOrdem(pRaiz->Esquerda);
-        printf("\n%i",pRaiz->numero);
-        exibirEmOrdem(pRaiz->direita);
-    }
-}
-void exibirPreOrdem(No *pRaiz){
-    if(pRaiz != NULL){
-        printf("\n%d",pRaiz->numero);
-        exibirPreOrdem(pRaiz->esquerda);
-        exibirPreOrdem(pRaiz->direita);
-    }
+int main(){ 
+	
+	int valor, n, qnt, i, j;
+	tDesc d;
+	
+	scanf("%d", &n);	
+	for(j=0; j<n;){
+		inicializa(&d);
+		scanf("%d", &qnt);
+		for(i=0; i < qnt; i++){
+			scanf("%d", &valor);
+			IncluiNoh(&d, valor);
+		}				
+		printf("Case %d:\n", ++j);
+		printf("Pre.:");
+		ImprimeArvore(d.raiz, 0);
+		printf("\n");
+		printf("In..:");
+		ImprimeArvore(d.raiz, 1);
+		printf("\n");
+		printf("Post:");
+		ImprimeArvore(d.raiz, 2);
+		printf("\n\n");
+	}
+	return 0;
 }
 
-void exibirPosOrdem(No *pRaiz){
-    if(pRaiz != NULL){
-        exibirPosOrdem(pRaiz->esquerda);
-        exibirPosOrdem(pRaiz->direita);
-        printf("\n%i",pRaiz->numero);
-    }
+void ImprimeArvore(TNo *r, int i){
+	if( r != NULL ){
+		if(i == 0){
+			printf(" %d", r->valor);
+			ImprimeArvore(r->esq, i);
+			ImprimeArvore(r->dir, i);
+		}else
+			if(i == 1){				
+				ImprimeArvore(r->esq, i);
+				printf(" %d", r->valor);
+				ImprimeArvore(r->dir, i);
+			}else{
+				ImprimeArvore(r->esq, i);				
+				ImprimeArvore(r->dir, i);
+				printf(" %d", r->valor);
+			}
+	}
 }
-int main(void){
 
+void inicializa(tDesc *d){
+	d->raiz = NULL;
+}
 
+void IncluiNoh(tDesc *d, int valor){
+	TNo *aux, *pai;
+	
+	aux = (TNo *) malloc(sizeof(TNo));
+	aux->valor = valor;
+	aux->dir = NULL;
+	aux->esq = NULL;	
+	pai = AchaPai(d->raiz, valor);
+	if(pai == NULL)
+		d->raiz = aux;
+	else
+		if(valor <= pai->valor )
+			pai->esq = aux;
+		else
+			pai->dir = aux;
+}
 
-    return 0;
+TNo *AchaPai(TNo *r, int n){ 
+	if( r == NULL )
+		return NULL;
+	else
+		if( n <= r->valor )
+	/* n e descendente do lado esquerdo de r */
+			if( r->esq == NULL )
+				return r;
+			else
+				return AchaPai( r->esq, n );
+		else
+	/* n e descendente do lado direito de r */
+			if( r->dir == NULL )
+				return r;
+			else
+				return AchaPai( r->dir, n );
 }
