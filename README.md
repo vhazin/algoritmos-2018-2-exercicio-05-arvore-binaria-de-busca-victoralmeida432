@@ -30,7 +30,7 @@ For each input set, you should print the message "Case n:", where n is the seque
 Note: None space must be printed after the last number of each line and the program should print a blank line after each test case, even after the last test case.
 
 ### Example
-
+```
 Input:
 2
 3
@@ -48,3 +48,5 @@ Case 2:
 Pre.: 8 3 1 6 4 7 10 14 13
 In..: 1 3 4 6 7 8 10 13 14
 Post: 1 4 7 6 3 13 14 10 8
+
+```
