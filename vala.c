@@ -10,33 +10,6 @@ void ImprimeArvore(TNo *, int);
 void IncluiNoh(tDesc *, int);
 void inicializa(tDesc *);
 
-int main(){ 
-	
-	int valor, n, qnt, i, j;
-	tDesc d;
-	
-	scanf("%d", &n);	
-	for(j=0; j<n;){
-		inicializa(&d);
-		scanf("%d", &qnt);
-		for(i=0; i < qnt; i++){
-			scanf("%d", &valor);
-			IncluiNoh(&d, valor);
-		}				
-		printf("Case %d:\n", ++j);
-		printf("Pre.:");
-		ImprimeArvore(d.raiz, 0);
-		printf("\n");
-		printf("In..:");
-		ImprimeArvore(d.raiz, 1);
-		printf("\n");
-		printf("Post:");
-		ImprimeArvore(d.raiz, 2);
-		printf("\n\n");
-	}
-	return 0;
-}
-
 void ImprimeArvore(TNo *r, int i){
 	if( r != NULL ){
 		if(i == 0){
@@ -94,3 +67,32 @@ TNo *AchaPai(TNo *r, int n){
 			else
 				return AchaPai( r->dir, n );
 }
+
+int main(){ 
+	
+	int valor, n, qnt, i, j;
+	tDesc d;
+	
+	scanf("%d", &n);	
+	for(j=0; j<n;){
+		inicializa(&d);
+		scanf("%d", &qnt);
+		for(i=0; i < qnt; i++){
+			scanf("%d", &valor);
+			IncluiNoh(&d, valor);
+		}				
+		printf("Case %d:\n", ++j);
+		printf("Pre.:");
+		ImprimeArvore(d.raiz, 0);
+		printf("\n");
+		printf("In..:");
+		ImprimeArvore(d.raiz, 1);
+		printf("\n");
+		printf("Post:");
+		ImprimeArvore(d.raiz, 2);
+		printf("\n\n");
+	}
+	return 0;
+}
+
+
